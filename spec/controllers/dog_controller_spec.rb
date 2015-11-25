@@ -156,8 +156,22 @@ RSpec.describe DogsController, :type => :controller do
                 patch :update, {id: dog.id, dog: update_attributes}, valid_session
                 dog.reload
                 expect(response).to redirect_to (assigns(:dog))
-            end           
+         end           
 		end
+		context " invalid_attributes" do 
+
+			it " check that @dog is assigned " do 
+				dog = Dog.create! valid_attributes                
+				patch :update, {id: dog.id, dog: email_invalid_attributes}, valid_session
+				dog.reload
+				expect(assigns(:dog)).to be_an_instance_of(Dog)
+			end 
+
+			# it " check that page is redirected to @dog.edit" do 
+			# 	patch :update, {dog: email_invalid_attributes}, valid_session
+			# 	expect(response).to render_template("new")
+			# end 
+		end 
 
 	end
 
