@@ -12,10 +12,19 @@ RSpec.describe DogsController, :type => :controller do
 		} 
 	}
 
+ let(:update_attributes) { 
+        @update_attributes = {
+            name: "Scruffy", email: "scruffster@aol.com",     
+            password: "testtest", password_confirmation: "testtest",     
+            birthday: Time.now-3.years, 
+            city: "New York", 
+            state: "NY",newsletter: true  
+            } 
+        }
 
 	let(:email_invalid_attributes) { 
-		@invalid_attributes = {
-			name: "Fluffy", email: "fluffster@aol.com",     
+		@email_invalid_attributes = {
+			name: "Fluffy", email:  nil,     
 			password: "testtest", password_confirmation: "testtest",     
 			birthday: Time.now-3.years, 
 			city: "New York", 
@@ -106,9 +115,33 @@ RSpec.describe DogsController, :type => :controller do
 
 			it " check that page is redirected to create a new dog" do 
 					post :create, {dog: email_invalid_attributes}, valid_session
-					expect(response).to render_template("new")
+					expect(response).to render_template(:new)
 			end 
 		end 
 	end 
+
+
+describe " PATCH update " do 
+
+        context " valid_attributes" do 
+            it " check that @dog is assigned" do 
+                #create a dog
+                #
+                dog = Dog.create! valid_attributes
+                #send new data to the update action along with dog's 
+                # id we want to change
+                #
+                patch :update, {id: dog.id, dog:update_attributes}, valid_session
+                #ensure that the variable in the update action is assigned 
+                # the same information as the dog we created in the test
+                #
+                expect(assigns(:dog)).to eq(dog)
+            end
+        end
+    end
+
+
+
+
 
 end
