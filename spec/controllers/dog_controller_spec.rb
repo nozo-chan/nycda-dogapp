@@ -149,7 +149,14 @@ RSpec.describe DogsController, :type => :controller do
 	       	patch :update, {id: dog.id, dog:update_attributes}, valid_session
 	       	dog.reload
 	       	expect(dog.email).to eq("scruffster@aol.com")
-			end            
+			end  
+
+			it " check that page is redirected to @dog" do 
+                dog = Dog.create! valid_attributes
+                patch :update, {id: dog.id, dog: update_attributes}, valid_session
+                dog.reload
+                expect(response).to redirect_to (assigns(:dog))
+            end           
 		end
 
 	end
