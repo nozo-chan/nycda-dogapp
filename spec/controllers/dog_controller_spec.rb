@@ -121,27 +121,37 @@ RSpec.describe DogsController, :type => :controller do
 	end 
 
 
-describe " PATCH update " do 
+	describe " PATCH update " do 
 
-        context " valid_attributes" do 
-            it " check that @dog is assigned" do 
-                #create a dog
-                #
-                dog = Dog.create! valid_attributes
-                #send new data to the update action along with dog's 
-                # id we want to change
-                #
-                patch :update, {id: dog.id, dog:update_attributes}, valid_session
-                #ensure that the variable in the update action is assigned 
-                # the same information as the dog we created in the test
-                #
-                expect(assigns(:dog)).to eq(dog)
-            end
-        end
-    end
+		context " valid_attributes" do 
+			it " check that @dog is assigned" do 
+				#create a dog
+				#
+				dog = Dog.create! valid_attributes
+				#send new data to the update action along with dog's 
+				# id we want to change
+				#
+				patch :update, {id: dog.id, dog:update_attributes}, valid_session
+				#ensure that the variable in the update action is assigned 
+				# the same information as the dog we created in the test
+				#
+				expect(assigns(:dog)).to eq(dog)
+			end
+			it " check that @dog.update.name is saved to Dog.all" do 
+	       	dog = Dog.create! valid_attributes
+	       	patch :update, {id: dog.id, dog:update_attributes}, valid_session
+	       	dog.reload
+	       	expect(dog.name).to eq("Scruffy")
+			end
 
+			it " check that @dog.update.email is saved to Dog.all" do 
+	       	dog = Dog.create! valid_attributes
+	       	patch :update, {id: dog.id, dog:update_attributes}, valid_session
+	       	dog.reload
+	       	expect(dog.email).to eq("scruffster@aol.com")
+			end            
+		end
 
-
-
+	end
 
 end
