@@ -45,10 +45,26 @@ RSpec.describe Dog, :type => :model do
       expect(dog.location).to eq("New York, NY")
     end
     
+    it "puppy?" do
+        dog = build(:dog)
+        expect(dog.puppy?).to be(false)
+    end
+    
     it "age_in_dog_years" do
-      dog = build(:dog)
-      expect(dog.age_in_dog_years).to eq(21)
-    end   
-  end
+        dog = build(:dog)
+        expect(dog.age_in_dog_years).to eq(21)
+    end
+    
+    it "subscribe_to_newsletter" do
+        dog = build(:dog)
+        expect(dog.subscribe_to_newsletter).to be true
+    end         
 
+    it "unsubscribe_from_newsletter" do
+        dog = build(:dog)
+        dog.unsubscribe_from_newsletter
+        expect(dog.newsletter).to be false  
+  	end
+
+  end
 end
