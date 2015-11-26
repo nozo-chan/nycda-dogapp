@@ -39,6 +39,16 @@ RSpec.describe Dog, :type => :model do
       dog = build(:dog) 
       expect(dog.age).to eq(3)
     end
+
+    it "location" do
+      dog = build(:dog) 
+      expect(dog.location).to eq("New York, NY")
+    end
+    
+    it "age_in_dog_years" do
+      dog = build(:dog)
+      expect(dog.age_in_dog_years).to eq(21)
+    end   
   end
 
 end
